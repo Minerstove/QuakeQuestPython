@@ -1,3 +1,21 @@
+mixed_code = "rstj rs {ifd z-}'kzze jzmzekpue-ez" #"defz de myvt lpno{llu zl'lu{bgupul"
+alphabet = "abcdefghijklmnopqrstuvwxyz{}'-"
+
+def ceasarCypher_decoder(ciphertext, shift, alphabet):
+    decrypted_text = ""
+    for char in ciphertext:
+        if char in alphabet:  # Only shift characters in the provided alphabet
+            char_index = alphabet.index(char)
+            decrypted_index = (char_index + shift) % len(alphabet)
+            decrypted_text += alphabet[decrypted_index]
+        else:
+            decrypted_text += char  # Keep characters not in the alphabet unchanged
+    return decrypted_text
+    
+def brute_force_caesar_extended(ciphertext, alphabet):
+    for shift in range(1, len(alphabet)):  # Try all possible shifts
+        print(f"Shift by {shift}: {ceasarCypher_decoder(ciphertext, shift, alphabet)}")
+
 def nokiaCode_decorder():
     nokiaCode = ["6", "33", "7777", "7777", "2", "4", "33", "0", "444", "66", "8", "44", "33", "7", "666", "33", "6"]
     letter_list = []
@@ -108,5 +126,10 @@ def boardCode_decoder():
 
     return final_str
 
-print(nokiaCode_decorder())
-print(boardCode_decoder())
+brute_force_caesar_extended(mixed_code,alphabet) #shift by 9 forward
+print(nokiaCode_decorder()) # this give message in the poem
+print(boardCode_decoder()) #This means Jose Rizal\
+
+"""
+The answer is Jose Rizals message in his 1879 poem which is ANG KABATAAN, ANG PAGASA NG BAYAN
+"""
