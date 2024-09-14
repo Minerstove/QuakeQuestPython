@@ -1,5 +1,6 @@
 from obspy.clients.fdsn import Client
 from obspy import UTCDateTime
+
 client = Client("RASPISHAKE", _discover_services=False)
 
 start_time=UTCDateTime(2024,8,1)
@@ -21,14 +22,15 @@ def stationDataGrabber():
     print(inventory)
 
 def waveFormfunc():
-    t = UTCDateTime("2023-10-11T06:45:00.000")
-    st = client.get_waveforms("AM", "R3B2D", "00", "LHZ", t, t + 60 * 60)
+    st = client.get_waveforms("AM", "R3B2D", "00", "EHZ", start_time, start_time + 60 * 60)
     st.plot() 
 
 def testingshit():
+    client = Client("IRIS")
     t = UTCDateTime("2010-02-27T06:45:00.000")
     st = client.get_waveforms("IU", "ANMO", "00", "LHZ", t, t + 60 * 60)
     st.plot() 
 
 #testingshit()
-stationDataGrabber()
+#stationDataGrabber()
+waveFormfunc()
