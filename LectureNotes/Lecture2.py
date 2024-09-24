@@ -1,4 +1,3 @@
-from IPython.display import clear_output
 import random
 class WordGuessing:
     def __init__(self, secret):
@@ -176,7 +175,6 @@ class GameLogic: #GAME LOGIC
 
     def _display_all_interface(self):
         # code here, clear the output, display hangman, display word status, and display message
-        clear_output()  # clears the screen
         self.TUI.display_hangman(self.lives_left)  # display hangman based on lives left
         self.Word.display_word()  # display the current word status (_ _ _ _ _)
         self.TUI.display_message(self.guess_status)  # display the message related to the guess
