@@ -1,0 +1,84 @@
+In a waveform, stats can be collected such as:
+    starttime and endtime
+
+    sampling_rate:
+
+    Description: The number of samples per second in the waveform (sampling frequency).
+    Type: float
+    Example: 100.0 (100 samples per second)
+
+npts:
+
+    Description: The number of data points (samples) in the Trace.
+    Type: int
+    Example: 6000 (for a 60-second trace with a sampling rate of 100 Hz)
+
+network:
+
+    Description: The seismic network code.
+    Type: str
+    Example: "AM" (for the Raspberry Shake network)
+
+station:
+
+    Description: The station code where the data was recorded.
+    Type: str
+    Example: "R1382"
+
+location:
+
+    Description: The location code (used if there are multiple instruments at one station).
+    Type: str
+    Example: "00"
+
+channel:
+
+    Description: The channel code (typically describes the type of instrument and component, e.g., EHZ for a vertical component of a seismometer).
+    Type: str
+    Example: "EHZ"
+
+calib:
+
+    Description: The calibration factor used to convert data to physical units.
+    Type: float
+    Example: 1.0 (no scaling applied)
+
+mseed:
+
+    Description: Contains additional MiniSEED metadata such as encoding, byte order, and data quality flags.
+    Type: AttribDict
+    Example: {'dataquality': 'D', 'number_of_records': 36, 'encoding': 'STEIM2', ...}
+
+delta:
+
+    Description: The time interval between two samples (inverse of sampling rate).
+    Type: float
+    Example: 0.01 (if the sampling rate is 100 Hz, delta is 1/100 = 0.01 seconds)
+
+_format:
+
+    Description: The format of the waveform file (e.g., MiniSEED, SAC, etc.).
+    Type: str
+    Example: "MSEED"
+
+processing:
+
+    Description: A list of the processing steps applied to the data.
+    Type: list
+    Example: ['remove_response()', 'detrend()']
+
+sac (if SAC format is used):
+
+    Description: SAC header information if the data is from a SAC file. This includes metadata like event location, origin time, station coordinates, etc.
+    Type: AttribDict
+    Example: { 'evla': 10.0, 'evlo': 12.0, 'evdp': 5.0, ... }
+
+Other variables obspy can find are:
+Variables that can be measured:
+1. Peak Ground Acceleration, Velocity, Displacement
+2. Fourier Spectra
+3. Response Spectrum
+4. Seismic Moment
+5. Magnitude (Local and Moment)
+6. Seismic Spectral Analysis (H/V Ratio)
+7. 

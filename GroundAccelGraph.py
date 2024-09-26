@@ -1,5 +1,4 @@
-import obspy
-from obspy import read
+from obspy import read, read_inventory
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -7,24 +6,25 @@ import numpy as np
 # Load example data from a file or web service
 st = read("./M7.4.mseed")  # You can also use web services to load data
 tr = st[0]
-
+inv = read_inventory("./R1382.xml")
+tr_vel = tr.remove_response(inventory=inv, output="VEL",  water_level=60, plot=True) # shows velocity in m/s # VEL for velocity, see other possible values
+tr_acc = tr.remove_response(inventory=inv, output="ACC",  water_level=60, plot=True) #shows accel in m/s^2
 #print(tr.stats) print metadata
 
 # Step 2: Check the data to ensure it's in velocity (or displacement) form
-st.plot()  #visualize the original data (velocity)
+#st.plot()  #visualize the original data (velocity)
 
 # Step 3: Differentiate the velocity data to get acceleration
-st_acc = st.copy().differentiate()
-tr_acc=st_acc[0]
-print(tr_acc.data[:10])
+#tr_acc = tr.copy().differentiate()
+#print(tr_acc.data[:10])
 
 # Step 4: Find Peak Ground Acceleration
-st_acc.plot()  # Plot the acceleration data
+#st_acc.plot()  # Plot the acceleration data
 pga = np.max(np.abs(tr_acc.data))
 
 # Step 5: Access the acceleration trace data if needed for further analysis
-acceleration_data = st_acc[0].data
-times = st_acc[0].times()
+acceleration_data = tr_acc.data
+times = tr_acc.times()
 
 #print peak ground acceleartion
 print(f"Peak Ground Acceleration (PGA): {pga} m/s^2")
@@ -39,8 +39,8 @@ plt.ylabel("Acceleration (m/s²)")
 plt.show()
 
 #extra check plotting velocity vs time
-velocity_data = st[0].data
-velocity_time=st[0].times()
+velocity_data = tr_vel.data
+velocity_time = tr_vel.times()
 
 plt.figure()
 plt.plot(velocity_time, velocity_data)
