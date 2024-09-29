@@ -5,7 +5,7 @@ import cartopy.crs as ccrs
 import cartopy.feature as cfeature
 
 # Specify the directory where all the inventory files are stored
-inventory_dir = './'  # Directory containing station inventory files
+inventory_dir = './AbraEarthquakeDataM7'  # Directory containing station inventory files
 
 # Initialize lists to store station names and coordinates
 station_names = []
@@ -45,7 +45,7 @@ ax.add_feature(cfeature.LAND, facecolor='lightgray')
 ax.add_feature(cfeature.OCEAN, facecolor='aqua')
 
 # Plot station locations as red dots
-plt.scatter(lons, lats, color='red', marker='o', s=50, transform=ccrs.PlateCarree())
+plt.scatter(lons, lats, color='red', marker='o', s=50, transform=ccrs.PlateCarree(),label='Seismometer Location')
 # Plot earthquake location as a blue star
 earthquake = plt.scatter(earthquake_lon, earthquake_lat, color='blue', marker='*', s=200, transform=ccrs.PlateCarree(), label='Earthquake Event')
 
