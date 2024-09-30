@@ -1,3 +1,4 @@
+import csv
 from obspy import read_inventory, read
 import matplotlib.pyplot as plt
 import os
@@ -5,7 +6,8 @@ import cartopy.crs as ccrs
 import cartopy.feature as cfeature
 
 # Specify the directory where all the inventory files are stored
-inventory_dir = './AbraEarthquakeDataM7'  # Directory containing station inventory files
+directory = input("What directory in the Earthquake Data Folder are you accessing? ")
+inventory_dir = f'./EarthquakeData/{directory}'  # Directory containing station inventory files
 
 # Initialize lists to store station names and coordinates
 station_names = []
@@ -29,9 +31,24 @@ for file in os.listdir(inventory_dir):
 for name, lat, lon in zip(station_names, lats, lons):
     print(f"Station: {name}, Latitude: {lat}, Longitude: {lon}")
 
-#input Earthquake Latitude and Longhitude
-earthquake_lon = 126.59
-earthquake_lat = 8.44
+# Assuming earthquake data is stored in a file called 'earthquake_data.csv' in the same directory
+earthquake_file = os.path.join(inventory_dir, 'EQData.csv')
+
+# Initialize earthquake_lat and earthquake_lon
+earthquake_lat = None
+earthquake_lon = None
+
+# Read the CSV file to extract earthquake latitude and longitude
+with open(earthquake_file, mode='r') as file:
+    reader = csv.DictReader(file)
+    for row in reader:
+        # Assuming the columns are named 'Latitude' and 'Longitude'
+        earthquake_lat = float(row['Latitude'])
+        earthquake_lon = float(row['Longitude'])
+        break  # Assuming you only need the first earthquake event
+
+# Print the extracted earthquake coordinates
+print(f"Extracted Earthquake Location: Latitude={earthquake_lat}, Longitude={earthquake_lon}")
 
 # Plot using Cartopy
 plt.figure(figsize=(12, 10))
