@@ -4,11 +4,11 @@ from obspy import read, read_inventory
 import matplotlib.pyplot as plt
 import numpy as np
 
-st = read("./SurigaoEarthquakeDataM74/M7.4R8D68.mseed") 
+st = read("./EarthquakeData/SurigaoEarthquakeDataM74/M7.4R8D68.mseed") 
 st.plot()
 
 
-inv = read_inventory("./SurigaoEarthquakeDataM74/R8D68.xml") # the sample inv is the corresponding inv
+inv = read_inventory("./EarthquakeData/SurigaoEarthquakeDataM74/R8D68.xml") # the sample inv is the corresponding inv
                                      # for the sample trace
 
 tr = st[0]

@@ -5,8 +5,8 @@ from obspy.signal.freqattributes import peak_ground_motion
 
 #st = read("./M7.4.mseed")  # You can also use web services to load data
 #inv = read_inventory("./R1382.xml")
-st = read("./SurigaoEarthquakeDataM74/M7.4R8D68.mseed")
-inv = read_inventory("./SurigaoEarthquakeDataM74/R8D68.xml")
+st = read("./EarthquakeData/SurigaoEarthquakeDataM74/M7.4R8D68.mseed")
+inv = read_inventory("./EarthquakeData/SurigaoEarthquakeDataM74/R8D68.xml")
 #st = read("./M7.4R8095.mseed")
 #inv = read_inventory("./R8095.xml")
 
@@ -26,8 +26,8 @@ times = tr_acc.times()
 print(f"Peak Ground Acceleration (PGA): {pga} m/s^2")
 print(f"Peak Ground Acceleration (PGA) in g: {pga / 9.81} g") #Measured in g (standard)
 
-print(f"Peak Ground Acceleration (PGA): {pgm} m/s^2")
-#print(f"Peak Ground Acceleration (PGA) in g: {pgm / 9.81} g") #Measured in g (standard)
+print(f"Peak Ground Acceleration (PGA): {pgm[1]} m/s^2")
+print(f"Peak Ground Acceleration (PGA) in g: {pgm[1] / 9.81} g") #Measured in g (standard)
 
 plt.figure()
 plt.plot(times, acceleration_data)
