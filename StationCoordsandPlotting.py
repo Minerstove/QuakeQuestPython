@@ -1,18 +1,17 @@
 import csv
-from obspy import read_inventory, read
+from obspy import read_inventory
 import matplotlib.pyplot as plt
 import os
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
+import numpy as np
 
 # Specify the directory where all the inventory files are stored
 directory = input("What directory in the Earthquake Data Folder are you accessing? ")
 inventory_dir = f'./EarthquakeData/{directory}'  # Directory containing station inventory files
 
 # Initialize lists to store station names and coordinates
-station_names = []
-lats = []
-lons = []
+station_data = {}  # Dictionary to store unique stations with their coordinates
 
 # Loop through all the XML files in the directory (assuming .xml files)
 for file in os.listdir(inventory_dir):
@@ -23,12 +22,12 @@ for file in os.listdir(inventory_dir):
         # Extract coordinates for each station in the inventory
         for network in inv:
             for station in network:
-                station_names.append(station.code)
-                lats.append(station.latitude)
-                lons.append(station.longitude)
+                # Only add unique stations
+                if station.code not in station_data:
+                    station_data[station.code] = (station.latitude, station.longitude)
 
 # Print the station names and coordinates
-for name, lat, lon in zip(station_names, lats, lons):
+for name, (lat, lon) in station_data.items():
     print(f"Station: {name}, Latitude: {lat}, Longitude: {lon}")
 
 # Assuming earthquake data is stored in a file called 'earthquake_data.csv' in the same directory
@@ -50,6 +49,10 @@ with open(earthquake_file, mode='r') as file:
 # Print the extracted earthquake coordinates
 print(f"Extracted Earthquake Location: Latitude={earthquake_lat}, Longitude={earthquake_lon}")
 
+# Generate a colormap with as many colors as there are stations
+num_stations = len(station_data)
+colors = plt.cm.rainbow(np.linspace(0, 1, num_stations))
+
 # Plot using Cartopy
 plt.figure(figsize=(12, 10))
 ax = plt.axes(projection=ccrs.PlateCarree())
@@ -61,8 +64,10 @@ ax.add_feature(cfeature.BORDERS)
 ax.add_feature(cfeature.LAND, facecolor='lightgray')
 ax.add_feature(cfeature.OCEAN, facecolor='aqua')
 
-# Plot station locations as red dots
-plt.scatter(lons, lats, color='red', marker='o', s=50, transform=ccrs.PlateCarree(),label='Seismometer Location')
+# Plot unique station locations as red dots with varying colors and label with station names
+for (name, (lat, lon)), color in zip(station_data.items(), colors):
+    plt.scatter(lon, lat, color=color, marker='o', s=50, transform=ccrs.PlateCarree(), label=name)
+
 # Plot earthquake location as a blue star
 earthquake = plt.scatter(earthquake_lon, earthquake_lat, color='blue', marker='*', s=200, transform=ccrs.PlateCarree(), label='Earthquake Event')
 
