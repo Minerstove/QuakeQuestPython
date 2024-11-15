@@ -84,9 +84,10 @@ def process_seismic_data(directory):
 
         # Display Peak Ground Acceleration (PGA) results
         print(f"Peak Ground Acceleration (PGA): {pga} m/s²")
+        print(f"Peak Ground Acceleration (PGA): {pga*100} cm/s²")
         print(f"Peak Ground Acceleration (PGA) in g: {pga / 9.81} g")
-        print(f"Frequency-based Peak Ground Motion (PGA): {pgm[1]} m/s²")
-        print(f"Frequency-based Peak Ground Motion (PGA) in g: {pgm[1] / 9.81} g")
+        """print(f"Frequency-based Peak Ground Motion (PGA): {pgm[1]} m/s²")
+        print(f"Frequency-based Peak Ground Motion (PGA) in g: {pgm[1] / 9.81} g")"""
 
         # Show plots for each file
         plt.show()
